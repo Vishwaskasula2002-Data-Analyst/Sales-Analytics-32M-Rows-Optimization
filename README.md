@@ -8,11 +8,13 @@ Engineered an end-to-end data pipeline to process and analyze **32+ million sale
 * **Business Intelligence:** Power BI
 * **Key Techniques:** Shift-Left Architecture, SQL Window Functions, Data Modeling, DAX, Executive Formatting
 
-## 🚀 Architecture & Performance Optimization (Shift-Left)
-To ensure the dashboard loads instantly without power query bottlenecks, all heavy lifting was done at the database level:
-* **Data Cleansing:** Consolidated ambiguous categories ('missing' and 'other') into a unified 'Misc' segment using SQL Views.
-* **Backend Performance:** Complex aggregations of 32 million rows were optimized to execute rapidly using targeted Indexing (`CREATE INDEX`) and `ANALYSE`.
-* **Ultra-Light BI File:** Because all heavy data transformations were processed in the SQL backend, the final interactive Power BI `.pbix` file is incredibly lightweight (**only 760 KB!**).
+## 🚀 Architecture & Performance Optimization (The "Shift-Left" Methodology)
+To guarantee sub-second rendering times in Power BI and eliminate Power Query bottlenecks, I implemented a strict **Shift-Left architecture**. All heavy data processing, aggregations, and business logic were strategically pushed upstream to the PostgreSQL backend.
+
+* **Advanced Database Engineering:** Processed the massive **32+ million row** dataset by architecting optimized SQL Views. Leveraged Common Table Expressions (CTEs), complex multi-table `JOIN`s, and `DENSE_RANK()` window functions to pre-aggregate data before it ever reaches the BI layer.
+* **Targeted Indexing & Query Tuning:** Slashed complex query execution times to just **29 seconds** by deploying strategic B-Tree indexing (`CREATE INDEX`) on critical dimension keys and actively tuning the query planner using the `ANALYSE` command.
+* **Robust Data Sanitization:** Cleansed raw data directly at the source—casting precise data types, resolving negative numeric anomalies (`ABS()`), filtering logical outliers, and harmonizing ambiguous legacy text strings into a unified 'Misc' category.
+* **Ultra-Lightweight BI Model:** By completely offloading the computational overhead to the PostgreSQL engine, the Power BI data model only imports highly refined, business-ready dimensions. The result is an incredibly lean, lightning-fast `.pbix` file weighing **only 760 KB**.
 
 ## 📊 Dashboard Visuals
 
